@@ -25,6 +25,7 @@ export const AddNewTodo = (props) => {
     if (data) {
       console.log(data);
       props.onNewTodo();
+      setTitle("");
     }
   };
   return (
@@ -32,6 +33,7 @@ export const AddNewTodo = (props) => {
       <input
         type="text"
         className="border-b p-2 rounded-md"
+        value={title}
         placeholder="Add new todo..."
         onChange={(e) => setTitle(e.target.value)}
       />

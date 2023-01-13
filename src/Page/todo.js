@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 /**
-* @author
-* @function Todo
-**/
+ * @author
+ * @function Todo
+ **/
 
 export const Todo = (props) => {
-  return(
-    <div>Todo</div>
-   )
+  const { id } = useParams();
 
- }
+  useEffect(() => {
+    console.log(id);
+  }, []);
+  return <div>Todo</div>;
+};

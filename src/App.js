@@ -19,14 +19,12 @@ function App() {
     }
 
     if (data) {
-      console.log(data);
       setTodos(data);
       setError(null);
     }
   };
 
   const deleteTodos = async (id) => {
-    console.log(id);
     const { data, error } = await supabase
       .from("todos")
       .delete()
@@ -45,8 +43,6 @@ function App() {
   };
 
   const toggleTodos = async (id, isCompleted) => {
-    console.log(id);
-    console.log(isCompleted);
     const { data, error } = await supabase
       .from("todos")
       .update({ isCompleted: !isCompleted })
@@ -72,7 +68,7 @@ function App() {
       <h1 className="text-lg font-bold">Marvelous Todo</h1>
       <AddNewTodo onNewTodo={fetchTodos} />
       {error && <p>{error.message}</p>}
-      <ul className="m-auto w-1/4">
+      <ul className="mx-auto md:w-1/3 w-full">
         {todos.map((todo) => (
           <TodoBlock
             title={todo.title}
