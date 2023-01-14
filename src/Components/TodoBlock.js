@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 /**
  * @author
@@ -12,7 +13,9 @@ export const TodoBlock = (props) => {
         {props.isCompleted ? "✅" : "❌"}
       </button>
       <h1 className="flex-1">{props.title}</h1>
-      <button onClick={props.onEdit}>✏️</button>
+      <Link to={`/${props.id}`}>
+        <button>✏️</button>
+      </Link>
       <button onClick={props.onDelete}>🗑</button>
     </li>
   );
