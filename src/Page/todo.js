@@ -16,8 +16,9 @@ const Input = (props) => {
   );
 };
 
-const Todo = (props) => {
+export const Todo = (props) => {
   const { id } = useParams();
+  // const id = 1;
 
   const [todo, setTodo] = useState(null);
   const [error, setError] = useState(null);
@@ -93,5 +94,3 @@ const Todo = (props) => {
     </div>
   );
 };
-
-export default Todo;
