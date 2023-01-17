@@ -12,7 +12,13 @@ export const TodoBlock = (props) => {
       <button className="flex-none" onClick={props.onToggle}>
         {props.isCompleted ? "✅" : "❌"}
       </button>
-      <h1 className="flex-1">{props.title}</h1>
+      <h1
+        className={`flex-1 ${
+          props.isCompleted ? "line-through text-gray-300" : "text-black"
+        }`}
+      >
+        {props.title}
+      </h1>
       <Link to={`/${props.id}`}>
         <button>✏️</button>
       </Link>
