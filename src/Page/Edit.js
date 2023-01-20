@@ -28,7 +28,7 @@ export const Todo = (props) => {
 
   const fetchTodo = async () => {
     const { data, error } = await supabase
-      .from("todos")
+      .from("marvelous-todos")
       .select()
       .eq("id", id)
       .single();
@@ -56,7 +56,7 @@ export const Todo = (props) => {
   const updateTodo = async (e) => {
     e.preventDefault();
     const { data, error } = await supabase
-      .from("todos")
+      .from("marvelous-todos")
       .update({ title: title, note: note })
       .eq("id", id)
       .select();

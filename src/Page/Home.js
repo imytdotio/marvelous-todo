@@ -36,7 +36,7 @@ export const Home = (props) => {
 
   const fetchTodos = async () => {
     const { data, error } = await supabase
-      .from("todos")
+      .from("marvelous-todos")
       .select()
       .order('created_at')
       .order("importance", { ascending: false })
@@ -56,7 +56,7 @@ export const Home = (props) => {
 
   const deleteTodos = async (id) => {
     const { data, error } = await supabase
-      .from("todos")
+      .from("marvelous-todos")
       .delete()
       .eq("id", id)
       .select();
@@ -74,7 +74,7 @@ export const Home = (props) => {
 
   const toggleTodos = async (id, isCompleted) => {
     const { data, error } = await supabase
-      .from("todos")
+      .from("marvelous-todos")
       .update({ isCompleted: !isCompleted })
       .eq("id", id)
       .select();

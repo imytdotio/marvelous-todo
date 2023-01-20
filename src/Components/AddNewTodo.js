@@ -10,21 +10,26 @@ import { supabase } from "../Config/supabaseClient";
 
 export const AddNewTodo = (props) => {
   const [_title, setTitle] = useState("");
+  const [error, setError] = useState("");
   const [project, setProject] = useState("");
   const [importance, setImportance] = useState(0);
 
   const addNewTodo = async (e) => {
     e.preventDefault();
 
-    const title = _title.replace(project, '').replace("@" + ";", "").replaceAll("!", "");
+    const title = _title
+      .replace(project, "")
+      .replace("@" + ";", "")
+      .replaceAll("!", "");
 
     const { data, error } = await supabase
-      .from("todos")
+      .from("marvelous-todos")
       .insert({ title, project, importance })
       .select();
 
     if (error) {
-      console.log(error);
+      console.log(error.message);
+      setError(error);
     }
 
     if (data) {
@@ -50,7 +55,7 @@ export const AddNewTodo = (props) => {
 
           const importance = (e.target.value.match(new RegExp("!", "g")) || [])
             .length;
-          substring.trim() ? setProject(substring): setProject('Blank');
+          substring.trim() ? setProject(substring) : setProject("Blank");
           setImportance(importance);
         }}
       />
@@ -60,6 +65,7 @@ export const AddNewTodo = (props) => {
       >
         Add
       </button>
+      {error ? error.message : ""}
     </form>
   );
 };
