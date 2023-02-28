@@ -3,6 +3,7 @@ import { AddNewTodo } from "../Components/AddNewTodo";
 import React, { useState, useEffect } from "react";
 import { supabase } from "../Config/supabaseClient";
 import { TodoBlock } from "../Components/TodoBlock";
+import { TodoCol } from "../Components/TodoCol";
 
 /**
  * @author
@@ -14,33 +15,33 @@ export const Home = (props) => {
   const [error, setError] = useState(null);
   const [sortedTodos, setSortedTodos] = useState(null);
 
-  const sortTodos = (data) => {
-    let projects = [];
-    data.map((datum) => {
-      if (!projects.includes(datum.project)) {
-        projects.push(datum.project);
-      }
-    });
+  const [projects, setProjects] = useState([]);
 
-    let sorted = {};
-    projects.map((project) => {
-      sorted[project] = data.filter((datum) => datum.project.includes(project));
-    });
+  // const sortTodos = (data) => {
+  //   let projects = [];
+  //   data.map((datum) => {
+  //     if (!projects.includes(datum.project)) {
+  //       projects.push(datum.project);
+  //     }
+  //   });
 
-    var sortedList = [];
-    for (var i in sorted) {
-      sortedList.push([i, sorted[i]]);
-    }
-    setSortedTodos(sortedList);
-  };
+  //   let sorted = {};
+  //   projects.map((project) => {
+  //     sorted[project] = data.filter((datum) => datum.project.includes(project));
+  //   });
+
+  //   var sortedList = [];
+  //   for (var i in sorted) {
+  //     sortedList.push([i, sorted[i]]);
+  //   }
+  //   setSortedTodos(sortedList);
+  // };
 
   const fetchTodos = async () => {
-    const { data, error } = await supabase
-      .from("marvelous-todos")
-      .select()
-      .order('created_at')
-      .order("importance", { ascending: false })
-      .order("isCompleted");
+    const { data, error } = await supabase.from("marvelous-todos").select();
+    // .order("created_at")
+    // .order("importance", { ascending: false })
+    // .order("isCompleted");
 
     if (error) {
       setError(error);
@@ -48,60 +49,37 @@ export const Home = (props) => {
     }
 
     if (data) {
-      setTodos(data);
-      sortTodos(data);
+      // console.log(data);
+      const unique = [];
+      data.forEach((datum) => {
+        if (!unique.includes(datum.project)) unique.push(datum.project);
+      });
+      setProjects(unique);
+
+      // setTodos(data);
+      // sortTodos(data);
       setError(null);
     }
-  };
-
-  const deleteTodos = async (id) => {
-    const { data, error } = await supabase
-      .from("marvelous-todos")
-      .delete()
-      .eq("id", id)
-      .select();
-
-    if (error) {
-      setError(error);
-    }
-
-    if (data) {
-      setError(null);
-      console.log(data);
-      fetchTodos();
-    }
-  };
-
-  const toggleTodos = async (id, isCompleted) => {
-    const { data, error } = await supabase
-      .from("marvelous-todos")
-      .update({ isCompleted: !isCompleted })
-      .eq("id", id)
-      .select();
-
-    if (error) {
-      console.log(error);
-    }
-
-    if (data) {
-      console.log(data);
-    }
-    fetchTodos();
   };
 
   useEffect(() => {
     fetchTodos();
   }, []);
   return (
-    <div className="App m-8">
+    <div className="App m-8 max-h-screen">
       <h1 className="text-lg font-bold">Marvelous Todo</h1>
       <AddNewTodo onNewTodo={fetchTodos} />
       {error && <p>{error.message}</p>}
-      <ul className="mx-auto md:w-1/3 w-full">
-        {sortedTodos &&
+      <div className="mx-auto flex flex-row gap-4 overflow-scroll">
+        {/* <TodoCol project="Marvelous-todo" /> */}
+        {projects.map((project) => {
+          return <TodoCol project={project} key={project} />;
+        })}
+        {/* {sortedTodos &&
           sortedTodos.map((group) => {
+            console.log("g", group);
             return (
-              <div key={group[0]} className='mb-4'>
+              <ul key={group[0]} className="mb-4 flex flex-col gap-2 md:w-56 w-screen">
                 <h1 className="text-left font-bold mb-1">{group[0]}</h1>
                 {group[1].map((todo) => {
                   return (
@@ -111,15 +89,21 @@ export const Home = (props) => {
                       id={todo.id}
                       desc={todo.desc}
                       isCompleted={todo.isCompleted}
-                      onDelete={() => deleteTodos(todo.id)}
-                      onToggle={() => toggleTodos(todo.id, todo.isCompleted)}
+                      onDelete={(e) => {
+                        e.stopPropagation();
+                        deleteTodos(todo.id);
+                      }}
+                      onToggle={(e) => {
+                        e.stopPropagation();
+                        toggleTodos(todo.id, todo.isCompleted);
+                      }}
                     />
                   );
                 })}
-              </div>
+              </ul>
             );
-          })}
-      </ul>
+          })} */}
+      </div>
     </div>
   );
 };
