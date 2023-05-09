@@ -41,6 +41,7 @@ const Header = () => {
     // Trigger fetching todos after successfully adding a new todo.
     if (!error) {
       fetchTodos();
+      console.log(data);
       setInput("");
     }
 
