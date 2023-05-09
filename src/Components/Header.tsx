@@ -66,6 +66,7 @@ const Header = () => {
           onChange={(e) => {
             setInput(e.target.value);
           }}
+          value={input}
         />
         <button
           className="bg-zinc-700 hover:bg-emerald-700 duration-200 rounded-md h-12 px-4 text-lg"
