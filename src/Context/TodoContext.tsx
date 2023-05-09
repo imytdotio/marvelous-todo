@@ -46,7 +46,9 @@ export const fetchTodos = async (
     }));
 
     setTodos(todos);
+    console.log(data);
   }
-
-  console.log(error);
+  if (error) {
+    console.log(error);
+  }
 };

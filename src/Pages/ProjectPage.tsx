@@ -11,7 +11,7 @@ const ProjectPage = () => {
 
   useEffect(() => {
     fetchTodos(project);
-  }, [project, fetchTodos]);
+  }, [project]);
 
   return (
     <div>
