@@ -33,7 +33,7 @@ const Header = () => {
   const addTodo = async (e: React.FormEvent, input: string): Promise<void> => {
     e.preventDefault();
     const { title, project } = extractProjectAndTitle(input);
-    const { data, error }: PostgrestSingleResponse<Todo> = await supabase
+    const { error }: PostgrestSingleResponse<Todo> = await supabase
       .from("Todo")
       .insert([{ title, project }])
       .single();
@@ -41,7 +41,6 @@ const Header = () => {
     // Trigger fetching todos after successfully adding a new todo.
     if (!error) {
       fetchTodos();
-      console.log(data);
       setInput("");
     }
 
