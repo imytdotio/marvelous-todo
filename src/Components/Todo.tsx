@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { TodoContext, TodoType } from "../Context/TodoContext";
+// import { useContext } from "react";
+import { TodoType } from "../Context/TodoContext";
 import { Link } from "react-router-dom";
 
 const Todo = ({
@@ -10,11 +10,11 @@ const Todo = ({
   id,
   completed,
 }: TodoType) => {
-  const { fetchTodos } = useContext(TodoContext);
+  // const { fetchTodos } = useContext(TodoContext);
 
-  const handleProjectClick = () => {
-    fetchTodos(project);
-  };
+  // const handleProjectClick = () => {
+  //   fetchTodos(project);
+  // };
 
   return (
     <div
