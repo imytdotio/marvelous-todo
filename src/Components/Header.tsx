@@ -38,12 +38,14 @@ const Header = () => {
       .insert([{ title, project }])
       .single();
 
-    console.log(data);
-    console.log(error);
-
     // Trigger fetching todos after successfully adding a new todo.
-    if (!error) {
+    if (data) {
       fetchTodos();
+      setInput("");
+    }
+
+    if (error) {
+      console.log(error);
     }
   };
 

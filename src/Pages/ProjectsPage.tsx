@@ -12,11 +12,16 @@ const ProjectLink = ({ project, count }: ProjectLinkProps) => {
     <Link
       to={`/projects/${project}`}
       className="border-zinc-700 border-2 
-      duration-200 rounded-md px-4 text-lg flex flex-col  justify-center py-2 h-20"
+      duration-200 rounded-md px-4 text-lg flex flex-row justify-center py-2 h-20"
     >
-      <p>
-        <span className="font-bold">{project}</span>: {count}
-      </p>
+      <div className="flex-1 my-auto">
+        <span className="font-bold">{project}: </span>
+        {count}
+      </div>
+      <div className="flex flex-col items-center my-auto">
+        <p className="text-xs text-zinc-400">Next due date:</p>
+        <p>09 May</p>
+      </div>
     </Link>
   );
 };
@@ -50,7 +55,7 @@ function ProjectsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl mb-2">Project</h1>
+      <h1 className="text-2xl mb-2">Projects Count</h1>
       <div className="flex flex-col gap-2">
         {projectCounts.map((count, index) => (
           <div key={index}>
