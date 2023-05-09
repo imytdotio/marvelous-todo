@@ -10,6 +10,7 @@ import HomePage from "./Pages/HomePage";
 import Header from "./Components/Header";
 import ProjectsPage from "./Pages/ProjectsPage";
 import ProjectPage from "./Pages/ProjectPage";
+import FocusPage from "./Pages/FocusPage";
 
 function App() {
   const [todos, setTodos] = useState<TodoType[]>([]);
@@ -30,6 +31,7 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/focus" element={<FocusPage />} />
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/projects/:project" element={<ProjectPage />} />
             </Routes>

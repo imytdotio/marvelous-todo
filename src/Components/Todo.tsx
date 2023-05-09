@@ -17,7 +17,8 @@ const Todo = ({
   // };
 
   return (
-    <div
+    <Link
+      to={`/todo/${id}`}
       id={id}
       className="border-2 border-zinc-700 rounded-md flex flex-col gap-2 p-4"
     >
@@ -34,7 +35,7 @@ const Todo = ({
       <h1 className="text-2xl pl-4">{title}</h1>
       {/* <p>{description}</p> */}
       <p>{completed}</p>
-    </div>
+    </Link>
   );
 };
 
