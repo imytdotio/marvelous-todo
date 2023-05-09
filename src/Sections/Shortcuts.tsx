@@ -5,7 +5,7 @@ const Shortcuts = () => {
     <>
       <Shortcut to="/" title="Reschedule Overdue Tasks" />
       <Shortcut to="/" title="Plan Inbox" />
-      <Shortcut to="/" title="Projects" />
+      <Shortcut to="/projects" title="Projects" />
       <Shortcut to="/" title="Focus Now" red />
     </>
   );

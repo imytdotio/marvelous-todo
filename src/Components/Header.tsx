@@ -1,31 +1,62 @@
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { supabase } from "../config/supabaseClient";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
+import { TodoContext } from "../Context/TodoContext";
 
 interface Todo {
   title: string;
 }
 
 const Header = () => {
+  const { fetchTodos } = useContext(TodoContext);
   const [input, setInput] = useState("");
 
-  const addTask = async (e: React.FormEvent, input: string): Promise<void> => {
+  const extractProjectAndTitle = (input: string) => {
+    const pattern = /@\s*([\w\s]+)\./;
+
+    const match = pattern.exec(input);
+    let project = "";
+    let title = input;
+
+    if (match) {
+      project = match[1];
+      title = input.replace(match[0], "").trim();
+    } else {
+      title = input;
+      project = "inbox";
+    }
+
+    return { title, project };
+  };
+
+  const addTodo = async (e: React.FormEvent, input: string): Promise<void> => {
     e.preventDefault();
-    console.log(input);
+    const { title, project } = extractProjectAndTitle(input);
     const { data, error }: PostgrestSingleResponse<Todo> = await supabase
       .from("Todo")
-      .insert([{ title: input }])
+      .insert([{ title, project }])
       .single();
+
     console.log(data);
     console.log(error);
+
+    // Trigger fetching todos after successfully adding a new todo.
+    if (!error) {
+      fetchTodos();
+    }
   };
 
   return (
     <>
-      <h1 className="font-bold text-4xl text-center bg-zinc-700 rounded-md mb-2 py-2">
-        M-Todo
-      </h1>
+      <Link
+        to="/"
+        className="font-bold text-4xl text-center bg-zinc-700 rounded-md mb-2 py-2"
+      >
+        <h1 className="font-bold text-4xl text-center bg-zinc-700 rounded-md mb-2 py-2">
+          M-Todo
+        </h1>
+      </Link>
       <div className="flex flex-row gap-2 mb-2">
         <input
           className="w-full rounded-md border-2 border-zinc-500 focus:border-emerald-500 placeholder:text-zinc-500 bg-zinc-700 h-12 px-4 text-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -36,7 +67,7 @@ const Header = () => {
         />
         <button
           className="bg-zinc-700 hover:bg-emerald-700 duration-200 rounded-md h-12 px-4 text-lg"
-          onClick={(e) => addTask(e, input)}
+          onClick={(e) => addTodo(e, input)}
         >
           Add
         </button>
