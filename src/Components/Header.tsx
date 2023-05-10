@@ -56,10 +56,16 @@ const Header = () => {
         className="flex flex-row gap-2 mb-2"
         // className="font-bold text-4xl text-center bg-zinc-700 rounded-md mb-2 py-2"
       >
-        <Link to="/" className="flex-1 font-bold text-4xl rounded-md my-auto py-2 align-middle hover:bg-zinc-600">
+        <Link
+          to="/"
+          className="flex-1 duration-100 font-bold text-4xl rounded-md my-auto py-2 align-middle hover:bg-zinc-600"
+        >
           M-Todo
         </Link>
-        <Link to="/login" className="text-5xl my-auto hover:bg-zinc-600 p-2 rounded-md">
+        <Link
+          to="/login"
+          className="text-5xl duration-100 my-auto hover:bg-zinc-600 p-2 rounded-md"
+        >
           <BiUserCircle />
         </Link>
       </div>
@@ -86,7 +92,7 @@ const Header = () => {
           Add
         </button>
       </div>
-      
+
       <div className="grid grid-cols-3 gap-2 mb-2">
         <Link
           to="/"

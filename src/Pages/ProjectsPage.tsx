@@ -7,6 +7,11 @@ interface ProjectLinkProps {
   count: number;
 }
 
+interface ProjectCount {
+  project: string;
+  count: number;
+}
+
 const ProjectLink = ({ project, count }: ProjectLinkProps) => {
   return (
     <Link
@@ -28,9 +33,7 @@ const ProjectLink = ({ project, count }: ProjectLinkProps) => {
 
 function ProjectsPage() {
   const { todos, fetchTodos } = useContext(TodoContext);
-  const [projectCounts, setProjectCounts] = useState<Record<string, number>[]>(
-    []
-  );
+  const [projectCounts, setProjectCounts] = useState<ProjectCount[]>([]);
 
   useEffect(() => {
     fetchTodos();
@@ -48,7 +51,8 @@ function ProjectsPage() {
     });
 
     const countsArray = Object.entries(counts).map(([project, count]) => ({
-      [project]: count,
+      project: project,
+      count: count,
     }));
     setProjectCounts(countsArray);
   }, [todos]);
@@ -57,12 +61,12 @@ function ProjectsPage() {
     <div>
       <h1 className="text-2xl mb-2">Projects Count</h1>
       <div className="flex flex-col gap-2">
-        {projectCounts.map((count, index) => (
-          <div key={index}>
-            {Object.entries(count).map(([project, count]) => (
-              <ProjectLink project={project} count={count} key={project} />
-            ))}
-          </div>
+        {projectCounts.map((countObj) => (
+          <ProjectLink
+            project={countObj.project}
+            count={countObj.count}
+            key={countObj.project}
+          />
         ))}
       </div>
     </div>
